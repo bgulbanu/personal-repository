@@ -1,0 +1,815 @@
+{
+	"info": {
+		"_postman_id": "ee73fbc8-211d-440a-8c60-7b5f313a4854",
+		"name": "CA Marketing Address API collection",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "28520179"
+	},
+	"item": [
+		{
+			"name": "Post New Address",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"switch (responseCode.code)  {",
+							"    case 200:",
+							"         tests[\"200 ok. The request has succeeded\"] = true;",
+							"         break;",
+							"    case 404: ",
+							"         tests[\"404 Not found\"] = false;",
+							"         break;",
+							"    case 400:",
+							"         tests[\"400 Bad Request\"] = false;",
+							"         break;",
+							"    case 401:",
+							"         tests[\"401 Bunauthorized\"] = false;",
+							"         break;",
+							"    case 500:",
+							"         tests[\"500 Internal Server Error\"] = false;",
+							"         break;",
+							"    case 503:",
+							"         tests[\"503 Server unavailable\"] = false;",
+							"         break;",
+							"    case 502:",
+							"         tests[\"502 bad gateway\"] = false;",
+							"         break;",
+							"    case 599:",
+							"         tests[\"599 Network connect timeout error\"];",
+							"         break;",
+							"    default: ",
+							"         tests[\"Sorry, we rae out of\" + responseCode.code] = false;                                 ",
+							"}",
+							"",
+							"pm.test(\"Body contains string id\", function () {",
+							"    pm.expect(pm.response.text()).to.include(\"id\");",
+							"});",
+							"",
+							"pm.test(\"Response time is less than 1000ms\", function () {",
+							"    pm.expect(pm.response.responseTime).to.be.below(1000);",
+							"});",
+							"",
+							"pm.test(\"Response size is less than 1000B\", function () {",
+							"    pm.expect(pm.response.responseSize).to.be.below(1000);",
+							"});",
+							"",
+							"pm.test(\"Header is correct\", function () {",
+							"    pm.response.to.have.header(\"Content-Type\", \"application/json;charset=utf-8\");",
+							"    pm.response.to.have.header(\"Content-Length\", \"45\");",
+							"    pm.response.to.have.header(\"Server\", \"Pepyaka/1.19.10\");",
+							"});",
+							"",
+							"pm.test(\"Response should be okay to process\", function() {",
+							"    pm.response.to.not.be.error;",
+							"    pm.response.to.be.withBody;",
+							"    pm.response.to.not.have.jsonBody(\"error\");",
+							"});",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"address\": {\n        \"fullName\": {\n            \"firstName\": \"Bret\",\n            \"lastName\": \"Pit\"\n        },\n        \"company\": \"Bread LLC\",\n        \"taxInfo\": {\n            \"id\": null,\n            \"type\": null\n        },\n        \"addressLine1\": \"42nd Street\",\n        \"addressLine2\": \"apt 555\",\n        \"street\": {\n            \"name\": null,\n            \"number\": null\n        },\n        \"city\": \"Brooklyn\",\n        \"country\": \"USA\",\n        \"subdivision\": \"NY\",\n        \"zipCode\": \"11232\",\n        \"phoneNumber\": null,\n        \"location\": {\n            \"latitude\": 40.6441545,\n            \"longitude\": -73.996658\n        }\n    },\n    \"setAsDefault\": false\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://addresses.wixapps.net/_api/addresses-web/v1/addresses",
+					"protocol": "https",
+					"host": [
+						"addresses",
+						"wixapps",
+						"net"
+					],
+					"path": [
+						"_api",
+						"addresses-web",
+						"v1",
+						"addresses"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Make default address",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"switch (responseCode.code)  {",
+							"    case 200:",
+							"         tests[\"200 ok. The request has succeeded\"] = true;",
+							"         break;",
+							"    case 404: ",
+							"         tests[\"404 Not found\"] = false;",
+							"         break;",
+							"    case 400:",
+							"         tests[\"400 Bad Request\"] = false;",
+							"         break;",
+							"    case 401:",
+							"         tests[\"401 Bunauthorized\"] = false;",
+							"         break;",
+							"    case 500:",
+							"         tests[\"500 Internal Server Error\"] = false;",
+							"         break;",
+							"    case 503:",
+							"         tests[\"503 Server unavailable\"] = false;",
+							"         break;",
+							"    case 502:",
+							"         tests[\"502 bad gateway\"] = false;",
+							"         break;",
+							"    case 599:",
+							"         tests[\"599 Network connect timeout error\"];",
+							"         break;",
+							"    default: ",
+							"         tests[\"Sorry, we rae out of\" + responseCode.code] = false;                                 ",
+							"}",
+							"",
+							"pm.test(\"Response time is less than 1000ms\", function () {",
+							"    pm.expect(pm.response.responseTime).to.be.below(1000);",
+							"});",
+							"",
+							"pm.test(\"Response size is less than 1000B\", function () {",
+							"    pm.expect(pm.response.responseSize).to.be.below(1000);",
+							"});",
+							"",
+							"pm.test(\"Header is correct\", function () {",
+							"    pm.response.to.have.header(\"Content-Type\", \"application/json;charset=utf-8\");",
+							"    pm.response.to.have.header(\"Content-Length\", \"2\");",
+							"    pm.response.to.have.header(\"Server\", \"Pepyaka/1.19.10\");",
+							"});",
+							"",
+							"pm.test(\"Response should be okay to process\", function () {",
+							"    pm.response.to.not.be.error;",
+							"    pm.response.to.be.withBody;",
+							"    pm.response.to.not.have.jsonBody(\"error\")",
+							"});",
+							"",
+							"pm.test(\"Body matches string '{}'\", function () {",
+							"    pm.expect(pm.response.text()).to.include(\"{}\");",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"id\": \"fccb1aa5-2c0f-412c-8bf6-2eeb00c83587\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://addresses.wixapps.net/_api/addresses-web/v1/addresses/default",
+					"protocol": "https",
+					"host": [
+						"addresses",
+						"wixapps",
+						"net"
+					],
+					"path": [
+						"_api",
+						"addresses-web",
+						"v1",
+						"addresses",
+						"default"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Show default address",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"switch (responseCode.code)  {",
+							"    case 200:",
+							"         tests[\"200 ok. The request has succeeded\"] = true;",
+							"         break;",
+							"    case 404: ",
+							"         tests[\"404 Not found\"] = false;",
+							"         break;",
+							"    case 400:",
+							"         tests[\"400 Bad Request\"] = false;",
+							"         break;",
+							"    case 401:",
+							"         tests[\"401 Bunauthorized\"] = false;",
+							"         break;",
+							"    case 500:",
+							"         tests[\"500 Internal Server Error\"] = false;",
+							"         break;",
+							"    case 503:",
+							"         tests[\"503 Server unavailable\"] = false;",
+							"         break;",
+							"    case 502:",
+							"         tests[\"502 bad gateway\"] = false;",
+							"         break;",
+							"    case 599:",
+							"         tests[\"599 Network connect timeout error\"];",
+							"         break;",
+							"    default: ",
+							"         tests[\"Sorry, we rae out of\" + responseCode.code] = false;                                 ",
+							"}",
+							"",
+							"pm.test(\"Response time is less than 1000ms\", function () {",
+							"    pm.expect(pm.response.responseTime).to.be.below(1000);",
+							"});",
+							"",
+							"pm.test(\"Response size is less than 1000B\", function () {",
+							"    pm.expect(pm.response.responseSize).to.be.below(1000);",
+							"});",
+							"",
+							"pm.test(\"Body contain id\", function () {",
+							"    pm.expect(pm.response.text()).to.include(\"id\");",
+							"});",
+							"",
+							"pm.test(\"FN is correct\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.address.fullName.firstName).to.eql(\"Bret\");",
+							"    pm.expect(jsonData.address.fullName.lastName).to.eql(\"Pit\");",
+							"    pm.expect(jsonData.address.country).to.eql(\"USA\");",
+							"    pm.expect(jsonData.address.city).to.eql(\"Brooklyn\");",
+							"    pm.expect(jsonData.address.zipCode).to.eql(\"11232\");",
+							"    pm.expect(jsonData.address.company).to.eql(\"Bread LLC\");",
+							"    pm.expect(jsonData.address.addressLine2).to.eql(\"apt 555\");",
+							"});",
+							"",
+							"",
+							"pm.test(\"Header is correct\", function () {",
+							"    pm.response.to.have.header(\"Content-Type\", \"application/json;charset=utf-8\");",
+							"    pm.response.to.have.header(\"Content-Length\", \"311\");",
+							"    pm.response.to.have.header(\"Server\", \"Pepyaka/1.19.10\");",
+							"});",
+							"",
+							"pm.test(\"Response should be okay to process\", function () {",
+							"    pm.response.to.not.be.error;",
+							"    pm.response.to.be.withBody;",
+							"    pm.response.to.not.have.jsonBody(\"error\")",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://addresses.wixapps.net/_api/addresses-web/v1/addresses/get-default-address",
+					"protocol": "https",
+					"host": [
+						"addresses",
+						"wixapps",
+						"net"
+					],
+					"path": [
+						"_api",
+						"addresses-web",
+						"v1",
+						"addresses",
+						"get-default-address"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get all addresses",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"switch (responseCode.code)  {",
+							"    case 200:",
+							"         tests[\"200 ok. The request has succeeded\"] = true;",
+							"         break;",
+							"    case 404: ",
+							"         tests[\"404 Not found\"] = false;",
+							"         break;",
+							"    case 400:",
+							"         tests[\"400 Bad Request\"] = false;",
+							"         break;",
+							"    case 401:",
+							"         tests[\"401 Bunauthorized\"] = false;",
+							"         break;",
+							"    case 500:",
+							"         tests[\"500 Internal Server Error\"] = false;",
+							"         break;",
+							"    case 503:",
+							"         tests[\"503 Server unavailable\"] = false;",
+							"         break;",
+							"    case 502:",
+							"         tests[\"502 bad gateway\"] = false;",
+							"         break;",
+							"    case 599:",
+							"         tests[\"599 Network connect timeout error\"];",
+							"         break;",
+							"    default: ",
+							"         tests[\"Sorry, we rae out of\" + responseCode.code] = false;                                 ",
+							"}",
+							"",
+							"pm.test(\"Content-Type is present\", function () {",
+							"    pm.response.to.have.header(\"content-type\", \"application/json;charset=utf-8\");",
+							"    pm.response.to.have.header(\"server\", \"Pepyaka/1.19.10\");",
+							"    pm.response.to.have.header(\"Transfer-Encoding\", \"chunked\");",
+							"});",
+							"",
+							"pm.test(\"Body contain id\", function () {",
+							"    pm.expect(pm.response.text()).to.include(\"id\");",
+							"});",
+							"",
+							"pm.test(\"Body contain fistName\", function () {",
+							"    pm.expect(pm.response.text()).to.include(\"firstName\");",
+							"});",
+							"",
+							"pm.test(\"Body contain lastName\", function () {",
+							"    pm.expect(pm.response.text()).to.include(\"lastName\");",
+							"});",
+							"",
+							"pm.test(\"Body contain city\", function () {",
+							"    pm.expect(pm.response.text()).to.include(\"city\");",
+							"});",
+							"",
+							"pm.test(\"Body contain company\", function () {",
+							"    pm.expect(pm.response.text()).to.include(\"company\");",
+							"});",
+							"",
+							"pm.test(\"Response time is less than 1000ms\", function () {",
+							"    pm.expect(pm.response.responseTime).to.be.below(1000);",
+							"});",
+							"",
+							"pm.test(\"Response size is less than 10KB\", function () {",
+							"    pm.expect(pm.response.responseSize).to.be.below(10240);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://addresses.wixapps.net/_api/addresses-web/v1/addresses",
+					"protocol": "https",
+					"host": [
+						"addresses",
+						"wixapps",
+						"net"
+					],
+					"path": [
+						"_api",
+						"addresses-web",
+						"v1",
+						"addresses"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get specific address",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"switch (responseCode.code)  {",
+							"    case 200:",
+							"         tests[\"200 ok. The request has succeeded\"] = true;",
+							"         break;",
+							"    case 404: ",
+							"         tests[\"404 Not found\"] = false;",
+							"         break;",
+							"    case 400:",
+							"         tests[\"400 Bad Request\"] = false;",
+							"         break;",
+							"    case 401:",
+							"         tests[\"401 Bunauthorized\"] = false;",
+							"         break;",
+							"    case 500:",
+							"         tests[\"500 Internal Server Error\"] = false;",
+							"         break;",
+							"    case 503:",
+							"         tests[\"503 Server unavailable\"] = false;",
+							"         break;",
+							"    case 502:",
+							"         tests[\"502 bad gateway\"] = false;",
+							"         break;",
+							"    case 599:",
+							"         tests[\"599 Network connect timeout error\"];",
+							"         break;",
+							"    default: ",
+							"         tests[\"Sorry, we rae out of\" + responseCode.code] = false;                                 ",
+							"}",
+							"",
+							"pm.test(\"ID is correct\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.address.id).to.eql(\"fccb1aa5-2c0f-412c-8bf6-2eeb00c83587\");",
+							"});",
+							"",
+							"pm.test(\"Person information is correct\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.address.fullName.firstName).to.eql(\"Bret\");",
+							"    pm.expect(jsonData.address.fullName.lastName).to.eql(\"Pit\");",
+							"    pm.expect(jsonData.address.city).to.eql(\"Brooklyn\");",
+							"    pm.expect(jsonData.address.zipCode).to.eql(\"11232\");",
+							"    pm.expect(jsonData.address.company).to.eql(\"Bread LLC\");",
+							"    pm.expect(jsonData.isDefaultAddress).to.eql(true);",
+							"});",
+							"",
+							"pm.test(\"Response time is less than 1000ms\", function () {",
+							"    pm.expect(pm.response.responseTime).to.be.below(1000);",
+							"});",
+							"",
+							"pm.test(\"Response size is less than 10KB\", function () {",
+							"    pm.expect(pm.response.responseSize).to.be.below(10240);",
+							"});",
+							"",
+							"pm.test(\"Content-Type is present\", function () {",
+							"    pm.response.to.have.header(\"content-type\", \"application/json;charset=utf-8\");",
+							"    pm.response.to.have.header(\"Content-Length\", \"335\");",
+							"    pm.response.to.have.header(\"server\", \"Pepyaka/1.19.10\");",
+							"    pm.response.to.have.header(\"x-content-type-options\", \"nosniff\");",
+							"});",
+							"",
+							"",
+							"",
+							"",
+							"",
+							"",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://addresses.wixapps.net/_api/addresses-web/v1/addresses/fccb1aa5-2c0f-412c-8bf6-2eeb00c83587",
+					"protocol": "https",
+					"host": [
+						"addresses",
+						"wixapps",
+						"net"
+					],
+					"path": [
+						"_api",
+						"addresses-web",
+						"v1",
+						"addresses",
+						"fccb1aa5-2c0f-412c-8bf6-2eeb00c83587"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Patch address",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"switch (responseCode.code)  {",
+							"    case 200:",
+							"         tests[\"200 ok. The request has succeeded\"] = true;",
+							"         break;",
+							"    case 404: ",
+							"         tests[\"404 Not found\"] = false;",
+							"         break;",
+							"    case 400:",
+							"         tests[\"400 Bad Request\"] = false;",
+							"         break;",
+							"    case 401:",
+							"         tests[\"401 Bunauthorized\"] = false;",
+							"         break;",
+							"    case 500:",
+							"         tests[\"500 Internal Server Error\"] = false;",
+							"         break;",
+							"    case 503:",
+							"         tests[\"503 Server unavailable\"] = false;",
+							"         break;",
+							"    case 502:",
+							"         tests[\"502 bad gateway\"] = false;",
+							"         break;",
+							"    case 599:",
+							"         tests[\"599 Network connect timeout error\"];",
+							"         break;",
+							"    default: ",
+							"         tests[\"Sorry, we rae out of\" + responseCode.code] = false;                                 ",
+							"}",
+							"",
+							"pm.test(\"Response Header is present and correct\", function () {",
+							"    pm.response.to.have.header(\"content-type\", \"application/json;charset=utf-8\");",
+							"    pm.response.to.have.header(\"Content-Length\", \"2\");",
+							"    pm.response.to.have.header(\"Server\", \"Pepyaka/1.19.10\")",
+							"});",
+							"",
+							"pm.test(\"Response should be okay to process\", function () {",
+							"    pm.response.to.not.be.error;",
+							"    pm.response.to.be.withBody;",
+							"    pm.response.to.be.json;",
+							"    pm.response.to.not.have.jsonBody(\"error\");",
+							"    pm.response.to.have.jsonBody({});",
+							"});",
+							"",
+							"pm.test(\"Response time is less than 1000ms\", function () {",
+							"    pm.expect(pm.response.responseTime).to.be.below(1000);",
+							"});",
+							"",
+							"pm.test(\"Response size is less than 10KB\", function () {",
+							"    pm.expect(pm.response.responseSize).to.be.below(10240);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"address\": {\n        \"id\": \"fccb1aa5-2c0f-412c-8bf6-2eeb00c83587\",\n        \"fullName\": {\n            \"firstName\": \"Brad\",\n            \"lastName\": \"Pitt\"\n        },\n        \"company\": \"Bread LLC\",\n        \"taxInfo\": {\n            \"id\": null,\n            \"type\": null\n        },\n        \"addressLine1\": \"9150 Wilshire Blvd\",\n        \"addressLine2\": \"Suit 350\",\n        \"street\": {\n            \"name\": null,\n            \"number\": null\n        },\n        \"city\": \"Beverly Hills\",\n        \"country\": \"USA\",\n        \"subdivision\": \"CA\",\n        \"zipCode\": \"90212\",\n        \"phoneNumber\": null,\n        \"location\": {\n            \"latitude\": 40.6441545,\n            \"longitude\": -73.996658\n        }\n    },\n    \"setAsDefault\": true,\n    \"fieldMask\": {\n        \"paths\": [\n            \"fullName.firstName\",\n            \"fullName.lastName\",\n            \"company\",\n            \"addressLine1\",\n            \"addressLine2\",\n            \"city\",\n            \"country\",\n            \"subdivision\",\n            \"zipCode\",\n            \"location.latitude\",\n            \"location.longitude\",\n            \"setAsDefault\"\n        ]\n    }\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://addresses.wixapps.net/_api/addresses-web/v1/addresses/fccb1aa5-2c0f-412c-8bf6-2eeb00c83587",
+					"protocol": "https",
+					"host": [
+						"addresses",
+						"wixapps",
+						"net"
+					],
+					"path": [
+						"_api",
+						"addresses-web",
+						"v1",
+						"addresses",
+						"fccb1aa5-2c0f-412c-8bf6-2eeb00c83587"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get specific updated address",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"switch (responseCode.code)  {",
+							"    case 200:",
+							"         tests[\"200 ok. The request has succeeded\"] = true;",
+							"         break;",
+							"    case 404: ",
+							"         tests[\"404 Not found\"] = false;",
+							"         break;",
+							"    case 400:",
+							"         tests[\"400 Bad Request\"] = false;",
+							"         break;",
+							"    case 401:",
+							"         tests[\"401 Bunauthorized\"] = false;",
+							"         break;",
+							"    case 500:",
+							"         tests[\"500 Internal Server Error\"] = false;",
+							"         break;",
+							"    case 503:",
+							"         tests[\"503 Server unavailable\"] = false;",
+							"         break;",
+							"    case 502:",
+							"         tests[\"502 bad gateway\"] = false;",
+							"         break;",
+							"    case 599:",
+							"         tests[\"599 Network connect timeout error\"];",
+							"         break;",
+							"    default: ",
+							"         tests[\"Sorry, we rae out of\" + responseCode.code] = false;                                 ",
+							"}",
+							"",
+							"pm.test(\"ID is correct\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.address.id).to.eql(\"fccb1aa5-2c0f-412c-8bf6-2eeb00c83587\");",
+							"});",
+							"",
+							"pm.test(\"Person information is correct\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.address.fullName.firstName).to.eql(\"Brad\");",
+							"    pm.expect(jsonData.address.fullName.lastName).to.eql(\"Pitt\");",
+							"    pm.expect(jsonData.address.city).to.eql(\"Beverly Hills\");",
+							"    pm.expect(jsonData.address.zipCode).to.eql(\"90212\");",
+							"    pm.expect(jsonData.address.company).to.eql(\"Bread LLC\");",
+							"    pm.expect(jsonData.isDefaultAddress).to.eql(true);",
+							"});",
+							"",
+							"pm.test(\"Response time is less than 1000ms\", function () {",
+							"    pm.expect(pm.response.responseTime).to.be.below(1000);",
+							"});",
+							"",
+							"pm.test(\"Response size is less than 10KB\", function () {",
+							"    pm.expect(pm.response.responseSize).to.be.below(10240);",
+							"});",
+							"",
+							"pm.test(\"Content-Type is present\", function () {",
+							"    pm.response.to.have.header(\"content-type\", \"application/json;charset=utf-8\");",
+							"    pm.response.to.have.header(\"Content-Length\", \"349\");",
+							"    pm.response.to.have.header(\"server\", \"Pepyaka/1.19.10\");",
+							"    pm.response.to.have.header(\"x-content-type-options\", \"nosniff\");",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://addresses.wixapps.net/_api/addresses-web/v1/addresses/fccb1aa5-2c0f-412c-8bf6-2eeb00c83587",
+					"protocol": "https",
+					"host": [
+						"addresses",
+						"wixapps",
+						"net"
+					],
+					"path": [
+						"_api",
+						"addresses-web",
+						"v1",
+						"addresses",
+						"fccb1aa5-2c0f-412c-8bf6-2eeb00c83587"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete address",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"switch (responseCode.code)  {",
+							"    case 200:",
+							"         tests[\"200 ok. The request has succeeded\"] = true;",
+							"         break;",
+							"    case 404: ",
+							"         tests[\"404 Not found\"] = false;",
+							"         break;",
+							"    case 400:",
+							"         tests[\"400 Bad Request\"] = false;",
+							"         break;",
+							"    case 401:",
+							"         tests[\"401 Bunauthorized\"] = false;",
+							"         break;",
+							"    case 500:",
+							"         tests[\"500 Internal Server Error\"] = false;",
+							"         break;",
+							"    case 503:",
+							"         tests[\"503 Server unavailable\"] = false;",
+							"         break;",
+							"    case 502:",
+							"         tests[\"502 bad gateway\"] = false;",
+							"         break;",
+							"    case 599:",
+							"         tests[\"599 Network connect timeout error\"];",
+							"         break;",
+							"    default: ",
+							"         tests[\"Sorry, we rae out of\" + responseCode.code] = false;                                 ",
+							"}",
+							"",
+							"pm.test(\"Body matches string '{}'\", function () {",
+							"    pm.expect(pm.response.text()).to.include(\"{}\");",
+							"});",
+							"",
+							"pm.test(\"Content-Type is present\", function () {",
+							"    pm.response.to.have.header(\"content-type\", \"application/json;charset=utf-8\");",
+							"    pm.response.to.have.header(\"Content-Length\", \"349\");",
+							"    pm.response.to.have.header(\"server\", \"Pepyaka/1.19.10\");",
+							"    pm.response.to.have.header(\"x-content-type-options\", \"nosniff\");",
+							"});",
+							"",
+							"pm.test(\"Response time is less than 1000ms\", function () {",
+							"    pm.expect(pm.response.responseTime).to.be.below(1000);",
+							"});",
+							"",
+							"pm.test(\"Response size is less than 10KB\", function () {",
+							"    pm.expect(pm.response.responseSize).to.be.below(10240);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "https://addresses.wixapps.net/_api/addresses-web/v1/addresses/fccb1aa5-2c0f-412c-8bf6-2eeb00c83587",
+					"protocol": "https",
+					"host": [
+						"addresses",
+						"wixapps",
+						"net"
+					],
+					"path": [
+						"_api",
+						"addresses-web",
+						"v1",
+						"addresses",
+						"fccb1aa5-2c0f-412c-8bf6-2eeb00c83587"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Check deleted postal address",
+			"request": {
+				"method": "GET",
+				"header": []
+			},
+			"response": []
+		}
+	],
+	"auth": {
+		"type": "apikey",
+		"apikey": [
+			{
+				"key": "value",
+				"value": "P1C1bxcunKDTwhytM0wTBGBAuhTJM_fyIi8sbw0UR_8.eyJpbnN0YW5jZUlkIjoiZjQ2Y2Q1MDItZjcyZi00NGY3LTk2MzgtNWRhMWRlYjBiNGU3IiwiYXBwRGVmSWQiOiIxNTA1Yjc3NS1lODg1LWViMWItYjY2NS0xZTQ4NWQ5YmY5MGUiLCJtZXRhU2l0ZUlkIjoiMjhiNzkzZDYtNTQyNC00MDU4LTgwNDktMDI2YTRkYjAyODJmIiwic2lnbkRhdGUiOiIyMDIzLTEwLTEyVDE4OjMwOjU3LjQ1NVoiLCJ1aWQiOiJkMzEyNGMyYi0xZmMxLTQwNjctYjU0ZS0wYzc5NzM0MmIwYTEiLCJkZW1vTW9kZSI6ZmFsc2UsImFpZCI6IjNhNWQzNzNjLTBhMjktNDU1Yy04YjRmLWMwNTllODg3YWJlNCIsImJpVG9rZW4iOiJkY2RiNDZkNC1hMzBiLTA0YWYtMTY3MS01ZmNiOTMwMDljYzgiLCJzaXRlT3duZXJJZCI6ImY5MTRmMTFjLWFhYjMtNDUyNy04ZDRlLWJhYjc2MjE0M2E2MCIsImV4cGlyYXRpb25EYXRlIjoiMjAyMy0xMC0xMlQyMjozMDo1Ny40NTVaIiwiaGFzVXNlclJvbGUiOmZhbHNlfQ",
+				"type": "string"
+			},
+			{
+				"key": "key",
+				"value": "Authorization",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	]
+}
